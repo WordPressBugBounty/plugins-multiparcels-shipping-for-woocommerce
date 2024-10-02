@@ -224,6 +224,19 @@ class MP_Admin
     function validate($options)
 
     {
+        if (MultiParcels()->permissions->isFull()) {
+            $response = MultiParcels()->api_client->request('restricted_api/couriers', 'GET');
+
+            if ($response->was_successful()) {
+
+                $data     = $response->get_data();
+
+                $carriers = $data['carriers'];
+
+                MultiParcels()->options->set('carriers', $carriers, true);
+
+            }
+        }
 
         /**
 
@@ -4440,7 +4453,10 @@ class MP_Admin
 
                                             echo "<ul style='font-size: 12px;display: flex;flex-wrap:wrap;'>";
 
-                                            foreach ($settings['pickup_points_cities'] as $city) {
+                                            foreach ($settings['pickup_points_cities'] as $city_key => $city) {
+                                                if ($city_key == 'anyksciai') {
+                                                    $city = 'Anykščiai AS';
+                                                }
 
                                                 $cityEnabled = MultiParcels()->locations->check_extra_siuntos_autobusais_cities($carrier, $city);
 
@@ -4487,13 +4503,13 @@ class MP_Admin
 
                                             echo "<small>";
 
-                                            echo __("Optional pickup cities", 'multiparcels-shipping-for-woocommerce').': ';
+//                                            echo __("Optional pickup cities", 'multiparcels-shipping-for-woocommerce').': ';
 
                                             echo "</small>";
 
                                             echo "<br>";
 
-                                            echo '<a href="#!" class="js--show-siuntos-autobusais-pickup-cities">' . __("Show pickup cities siuntos autobusais", 'multiparcels-shipping-for-woocommerce'). '</a>';
+                                            echo '<a href="#!" class="js--show-siuntos-autobusais-pickup-cities">' . __("Show and select from what city send shipments", 'multiparcels-shipping-for-woocommerce'). '</a>';
 
                                             echo '<div class="siuntos-autobusais" style="display: none;">';
 
