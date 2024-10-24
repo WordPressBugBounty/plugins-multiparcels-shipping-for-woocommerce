@@ -4445,7 +4445,7 @@ class MP_Admin
                                         if (isset($settings['pickup_points_cities'])) {
                                             echo "<br/>";
 
-                                            echo '<a href="#!" class="js--select-cities-siuntos-autobusais">' . __("Show and select which cities show for pickup points", 'multiparcels-shipping-for-woocommerce'). '</a>';
+                                            echo '<a href="#!" class="js--select-cities-siuntos-autobusais">' . __("Show and select which cities are available for pickup points.", 'multiparcels-shipping-for-woocommerce'). '</a>';
 
                                             echo "<br/>";
 
@@ -4509,7 +4509,7 @@ class MP_Admin
 
                                             echo "<br>";
 
-                                            echo '<a href="#!" class="js--show-siuntos-autobusais-pickup-cities">' . __("Show and select from what city send shipments", 'multiparcels-shipping-for-woocommerce'). '</a>';
+                                            echo '<a href="#!" class="js--show-siuntos-autobusais-pickup-cities">' . __("Show and select the city from which to send shipments.", 'multiparcels-shipping-for-woocommerce'). '</a>';
 
                                             echo '<div class="siuntos-autobusais" style="display: none;">';
 
