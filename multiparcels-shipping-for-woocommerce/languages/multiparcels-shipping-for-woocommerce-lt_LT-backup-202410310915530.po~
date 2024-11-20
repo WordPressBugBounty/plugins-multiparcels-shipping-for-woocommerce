@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - MultiParcels Shipping For WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-11-08 05:43+0000\n"
+"PO-Revision-Date: 2024-10-31 09:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-07 10:41+0000\n"
 "Last-Translator: \n"
-"X-Loco-Version: 2.6.11; wp-6.6.2"
+"X-Loco-Version: 2.6.8; wp-6.4.3"
 
 #: includes/abstracts/abstract-wc-mp-courier-shipping-method.php:30
 #, php-format
@@ -383,10 +383,6 @@ msgstr "Pristatymo mokestis"
 msgid "Delivery methods packeta"
 msgstr "Pristatymo metodai packeta"
 
-#: includes/class-mp-admin.php:8628
-msgid "Show delivery methods packeta"
-msgstr "Rodyti pristatymo metodus packeta"
-
 #: includes/abstracts/abstract-wc-mp-shipping-method.php:348
 msgid "Delivery only to this city"
 msgstr "Pristatymas tik į šį miestą"
@@ -412,10 +408,6 @@ msgstr "Neleisti pasirinkti šio pristatymo būdo su šiomis pristatymo klasėmi
 #: includes/abstracts/abstract-wc-mp-shipping-method.php:284
 msgid "Disabled"
 msgstr "Išjungta"
-
-#: includes/class-mp-woocommerce-order-shipping.php:1797
-msgid "Tracking number: %s"
-msgstr "Sekimo kodas: %s"
 
 #: includes/class-mp-woocommerce-order-shipping.php:612
 #: includes/class-mp-woocommerce.php:939
@@ -625,16 +617,6 @@ msgstr "Tinkelio rodymas išjungtas"
 #: includes/class-mp-admin.php:1760
 msgid "Grid display on"
 msgstr "Tinkelio rodymas įjungtas"
-
-#: includes/class-mp-admin.php:7327
-msgid ""
-"Grid display setting doesn't work on all themes because of different "
-"alignment techniques. Play with the settings to find the best version. Or "
-"write us and maybe we can help ;)"
-msgstr ""
-"Tinklelio rodymo nustatymas neveikia visose temose dėl skirtingų lygiavimo "
-"metodų. Žaiskite su nustatymais, kad rastumėte geriausią versiją. Arba "
-"parašykite mums ir mes padėsime ;)"
 
 #: includes/class-mp-admin.php:1757
 msgid "Grid display on + grid display aligned"
@@ -900,9 +882,10 @@ msgstr "Nėra paslėptų mokesčių"
 msgid "No locations found. Please try to run manual update"
 msgstr "Atsiėmimo vietų nerasta. Pabandykite rankinį atnaujinimą"
 
+#, fuzzy
 #| msgid "Phone"
 msgid "None"
-msgstr "Nėra"
+msgstr "Telefonas"
 
 #: includes/class-mp-admin.php:1220
 msgid "None. Wrong API key"
