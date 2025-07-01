@@ -1,0 +1,2 @@
+# Disable directory listing but allow direct file access
+Options -Indexes
