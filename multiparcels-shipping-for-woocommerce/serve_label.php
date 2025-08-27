@@ -1,25 +1,1 @@
-<?php
-// Load WordPress environment
-require_once( $_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );
-
-// Check user logged in
-if ( ! is_user_logged_in() ) {
-    auth_redirect(); // redirect guests to login page
-    exit;
-}
-
-// Sanitize filename from query param
-$filename = basename($_GET['file'] ?? '');
-
-$filepath = __DIR__ . '/shipments_labels/' . $filename;
-
-if ( ! file_exists( $filepath ) ) {
-    wp_die('File not found.');
-}
-
-// Serve PDF file (adjust Content-Type if needed)
-header('Content-Type: application/pdf');
-header('Content-Disposition: inline; filename="' . $filename . '"');
-header('Content-Length: ' . filesize($filepath));
-readfile($filepath);
-exit;
+<?php// No whitespace before this!// Load WordPress environmentrequire_once($_SERVER['DOCUMENT_ROOT'] . '/wp-load.php' );// Kill all previous outputwhile (ob_get_level()) {    ob_end_clean();}// Check user logged inif ( ! is_user_logged_in() ) {    auth_redirect(); // redirects to login    exit;}// Sanitize filename from query param$filename = basename($_GET['file'] ?? '');$label_dir = plugin_dir_path(__FILE__) . 'shipments_labels/';//$filepath = __DIR__ . '/shipments_labels/' . $filename;$filepath = $label_dir . $filename;if ( ! file_exists( $filepath ) ) {    http_response_code(404);    header('Content-Type: text/plain');    echo 'File not found.';    exit;}// Clear any output bufferingif (ob_get_length()) {    ob_end_clean();}// Set headers to serve the PDFheader('Content-Type: application/pdf');header('Content-Disposition: inline; filename="' . $filename . '"');header('Content-Length: ' . filesize($filepath));header('Accept-Ranges: bytes');header('Cache-Control: private, max-age=0, must-revalidate');// Output the PDFreadfile($filepath);exit;

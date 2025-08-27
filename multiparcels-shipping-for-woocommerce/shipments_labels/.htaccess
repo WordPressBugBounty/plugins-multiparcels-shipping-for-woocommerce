@@ -1,2 +1,7 @@
 # Disable directory listing but allow direct file access
 Options -Indexes
+<FilesMatch "\.pdf$">
+    Header set X-Robots-Tag "noindex, nofollow"
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
