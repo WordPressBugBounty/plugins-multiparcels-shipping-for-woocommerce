@@ -57,7 +57,8 @@ function initializeCheckoutBlocks() {
     $('#mp-wc-pickup-point-shipping-block').hide();
 
     // Load an additional block
-    $.post('/wp-admin/admin-ajax.php', { action: 'load_additional_block', nonce: multiparcels.nonce })
+    // '/wp-admin/admin-ajax.php'
+    $.post(multiparcels.ajax_url, { action: 'load_additional_block', nonce: multiparcels.nonce })
         .done(response => {
             $('body .wc-block-components-shipping-rates-control__package').append(response);
             attachShippingRateListeners();
@@ -87,7 +88,7 @@ function handleShippingMethodChange(selectedValue) {
     const $ = jQuery;
 
     // AJAX — hide address fields
-    $.post('/wp-admin/admin-ajax.php', {
+    $.post(multiparcels.ajax_url, {
         action: 'checkout_blocks_hide_inputs_for_terminal',
         selected_value: selectedValue,
         nonce: multiparcels.nonce
@@ -133,7 +134,7 @@ function setupPickupPointSelect(selectedValue) {
         placeholder: multiparcels.text.please_select_pickup_point_location,
         width: '100%',
         ajax: {
-            url: '/wp-admin/admin-ajax.php',
+            url: multiparcels.ajax_url,
             type: 'POST',
             dataType: 'json',
             delay: 250,
@@ -209,7 +210,7 @@ function setupSiuntosAutobusaisSelect(selectedValue) {
         placeholder: multiparcels.text.please_select_pickup_point_location,
         width: '100%',
         ajax: {
-            url: '/wp-admin/admin-ajax.php',
+            url: multiparcels.ajax_url,
             type: 'POST',
             dataType: 'json',
             delay: 250,
@@ -273,14 +274,14 @@ function setupSiuntosAutobusaisSelect(selectedValue) {
 
 // AJAX – send selected Pickup Point
 function sendPickupAjax(pickupId) {
-    jQuery.post('/wp-admin/admin-ajax.php', {
+    jQuery.post(multiparcels.ajax_url, {
         action: 'multiparcels_store_pickup_selection',
         nonce: multiparcels.nonce,
         multiparcels_pickup_location_value: pickupId
     });
 }
 
-
+let mp_ignore_checkout_update = false;
 
 jQuery(document).ready(function() {
     const $ = jQuery;
@@ -309,11 +310,11 @@ jQuery(document).ready(function() {
     });
 
     // --- Observe DOM changes (WooCommerce dynamic updates) ---
-    const observer = new MutationObserver(() => {
+    const observerMultiparcels = new MutationObserver(() => {
         handlePickupBlockCheck();
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    observerMultiparcels.observe(document.body, { childList: true, subtree: true });
 
     $('#shipping-country').on('change', function() {
         window.multiparcels_selected_location = '';
@@ -475,10 +476,15 @@ jQuery(document).ready(function() {
     });
 
     if(!document.querySelector('.wc-block-checkout')) {
-        initializeClassicPickupPointsSelect();
+        // initializeClassicPickupPointsSelect();
 
-        $('#billing_country, #shipping_country, #billing_city, #shipping_city, .shipping_method').on('change', function() {
+        $('#billing_country, #shipping_country, .shipping_method').on('change', function() {
+
             initializeClassicPickupPointsSelect();
+        });
+
+        $('#billing_city, #shipping_city').on('change', function() {
+            mp_ignore_checkout_update = true;
         });
 
         $(document).on('change', '.woocommerce-shipping-methods input[name^="shipping_method"]', function() {
@@ -506,7 +512,11 @@ function initializeClassicPickupPointsSelect() {
 
     });
 
-
+    if ($.isEmptyObject(shipping_methods)) {
+        $('input.shipping_method:checked').each(function () {
+            shipping_methods[$(this).data('index')] = $(this).val();
+        });
+    }
 
     var show_title = false;
 
@@ -621,7 +631,11 @@ function initializeClassicPickupPointsSelect() {
 
             $("#mp-map-preview").hide();
 
-            $("#mp-wc-pickup-point-shipping-select").html('');
+            // $("#mp-wc-pickup-point-shipping-select").html('');
+
+            if(!mp_ignore_checkout_update) {
+                $("#mp-wc-pickup-point-shipping-select").html('');
+            }
 
             $(".mp-selected-pickup-point-info").html('');
 
@@ -1032,6 +1046,10 @@ function initializeClassicPickupPointsSelect() {
 
     }
 }
+
+jQuery(document).on('updated_checkout cfw_updated_checkout', function (e, data) {
+    initializeClassicPickupPointsSelect();
+});
 
 // jQuery(document).on('updated_checkout cfw_updated_checkout', function (e, data) {
 //     const $ = jQuery;
@@ -1589,7 +1607,7 @@ jQuery(document).on('change', '#mp-wc-pickup-point-shipping-select', function ()
     if (jQuery('body').hasClass('theme-Divi')) {
 
         $.ajax({
-            url: '/wp-admin/admin-ajax.php',
+            url: multiparcels.ajax_url,
             type: 'POST',
             data: {
                 action: 'multiparcels_set_terminal_value',

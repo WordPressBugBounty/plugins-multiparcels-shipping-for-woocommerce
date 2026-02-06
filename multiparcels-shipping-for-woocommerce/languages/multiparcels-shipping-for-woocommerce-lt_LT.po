@@ -897,8 +897,8 @@ msgid "No hidden fees"
 msgstr "Nėra paslėptų mokesčių"
 
 #: includes/class-mp-admin.php:2090 includes/class-mp-notices.php:123
-msgid "No locations found. Please try to run manual update"
-msgstr "Atsiėmimo vietų nerasta. Pabandykite rankinį atnaujinimą"
+msgid "No locations found. Check if the courier is enabled on app.noparcels.com platform. Please try to run manual update"
+msgstr "Atsiėmimo vietų nerasta. Patikrinkite ar app.noparcels.com įjungtas kurjeris. Pabandykite rankinį atnaujinimą"
 
 #| msgid "Phone"
 msgid "None"

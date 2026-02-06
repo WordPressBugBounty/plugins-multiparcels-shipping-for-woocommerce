@@ -881,8 +881,8 @@ msgid "No hidden fees"
 msgstr "Żadnych ukrytych opłat"
 
 #: includes/class-mp-admin.php:2090 includes/class-mp-notices.php:123
-msgid "No locations found. Please try to run manual update"
-msgstr "Nie znaleziono lokalizacji. Spróbuj uruchomić aktualizację ręczną"
+msgid "No locations found. Check if the courier is enabled on app.noparcels.com. Please try to run manual update"
+msgstr "Nie znaleziono lokalizacji. Sprawdź, czy kurier jest włączony na app.noparcels.com platformie. Spróbuj uruchomić aktualizację ręczną"
 
 #: includes/class-mp-admin.php:1220
 msgid "None. Wrong API key"
