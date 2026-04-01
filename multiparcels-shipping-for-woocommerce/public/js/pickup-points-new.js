@@ -137,7 +137,7 @@ function setupPickupPointSelect(selectedValue) {
             url: multiparcels.ajax_url,
             type: 'POST',
             dataType: 'json',
-            delay: 250,
+            delay: 0,
             transport: function (params, success, failure) {
                 if (currentRequest) currentRequest.abort();
                 currentRequest = $.ajax(params);
@@ -184,10 +184,26 @@ function setupPickupPointSelect(selectedValue) {
         },
         language: {
             searching: function() {
-                return multiparcels.text.searching
+                return multiparcels.text.searching || 'Searching...';
+            },
+            noResults: function() {
+                return multiparcels.text.pickup_location_not_found || 'No pickup locations found';
+            },
+            loadingMore: function() {
+                return multiparcels.text.loading_more || 'Loading more results...';
             }
         }
     });
+
+    var savedPickupBlock = localStorage.getItem('mp_selected_pickup_point_block');
+    var savedPickupText = localStorage.getItem('mp_selected_pickup_point_text_block');
+
+    if (savedPickupBlock) {
+        var option = new Option(savedPickupText, savedPickupBlock, true, true);
+        $('#mp-wc-pickup-point-shipping-select-block')
+            .append(option)
+            .trigger('change');
+    }
 
     // Set a pre-selected option if needed
     if (window.multiparcels_selected_location && window.multiparcels_selected_location_text) {
@@ -198,6 +214,8 @@ function setupPickupPointSelect(selectedValue) {
     $select.off('change').on('change', function () {
         const selectedData = $(this).select2('data')[0];
         if (!selectedData) return;
+        localStorage.setItem('mp_selected_pickup_point_block', selectedData.id);
+        localStorage.setItem('mp_selected_pickup_point_text_block', selectedData.text);
         sendPickupAjax(selectedData.id);
     });
 }
@@ -218,7 +236,7 @@ function setupSiuntosAutobusaisSelect(selectedValue) {
             url: multiparcels.ajax_url,
             type: 'POST',
             dataType: 'json',
-            delay: 250,
+            delay: 0,
             transport: function (params, success, failure) {
                 if (currentRequest) currentRequest.abort();
                 currentRequest = $.ajax(params);
@@ -783,7 +801,7 @@ function initializeClassicPickupPointsSelect() {
                                 url: multiparcels.ajax_url,
                                 type: 'POST',
                                 dataType: 'json',
-                                delay: 250,
+                                delay: 0,
                                 transport: function(params, success, failure) {
                                     if (currentRequest) currentRequest.abort();
                                     currentRequest = $.ajax(params);
@@ -831,6 +849,9 @@ function initializeClassicPickupPointsSelect() {
                                 },
                                 noResults: function() {
                                     return multiparcels.text.pickup_location_not_found || 'No pickup locations found';
+                                },
+                                loadingMore: function() {
+                                    return multiparcels.text.loading_more || 'Loading more results...';
                                 }
                             },
                             templateResult: function(option) {
@@ -848,6 +869,15 @@ function initializeClassicPickupPointsSelect() {
                             }
                         });
 
+                        var savedPickup = localStorage.getItem('mp_selected_pickup_point');
+                        var savedPickupText = localStorage.getItem('mp_selected_pickup_point_text');
+
+                        if (savedPickup) {
+                            var option = new Option(savedPickupText, savedPickup, true, true);
+                            $('#mp-wc-pickup-point-shipping-select')
+                                .append(option)
+                                .trigger('change');
+                        }
 
 
 
@@ -1655,6 +1685,11 @@ jQuery(document).on('updated_checkout cfw_updated_checkout', function (e, data) 
 jQuery(document).on('change', '#mp-wc-pickup-point-shipping-select', function () {
     const $ = jQuery;
     var val = $('#mp-wc-pickup-point-shipping-select').val();
+    var text = $(this).find(':selected').text();
+
+    // Save selected pickup point
+    localStorage.setItem('mp_selected_pickup_point', val);
+    localStorage.setItem('mp_selected_pickup_point_text', text);
 
     if (jQuery('body').hasClass('theme-Divi')) {
 
