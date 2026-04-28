@@ -339,7 +339,9 @@ jQuery(document).ready(function() {
 
     observerMultiparcels.observe(document.body, { childList: true, subtree: true });
 
-
+    $(document).on('change', '#mp-wc-pickup-point-shipping-select', function() {
+        sendPickupAjax($(this).val());
+    });
 
     // $('#shipping-country').on('change', function() {
     $(document).on('input change', '#shipping-country', function() {

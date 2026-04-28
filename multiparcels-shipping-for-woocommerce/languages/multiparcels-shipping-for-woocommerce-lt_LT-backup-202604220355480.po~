@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - MultiParcels Shipping For WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-04-22 04:07+0000\n"
+"PO-Revision-Date: 2026-04-22 03:51+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -260,14 +260,6 @@ msgstr "Pakeisti užsakymo būseną po išsiuntimo su COD paslauga"
 msgid "Change order status to \"Completed\" after dispatching the order"
 msgstr "Pakeisti užsakymo būseną į \"Įvykdytas\" po užsakymo išsiuntimo"
 
-#: includes/class-mp-admin.php:8157
-msgid ""
-"Change order status to \"Completed\" after dispatching the order with COD "
-"service"
-msgstr ""
-"Pakeisti užsakymo būseną į „Įvykdytas“, kai užsakymas išsiunčiamas naudojant "
-"atsiskaitymą grynaisiais pristatymo metu (COD)"
-
 #: includes/class-mp-admin.php:2425
 msgid "Checkout"
 msgstr "Atsiskaitymas"
@@ -435,10 +427,6 @@ msgstr "Išjungti nemokamo pristatymo kuponus"
 msgid "Disable this method for these shipping classes"
 msgstr "Neleisti pasirinkti šio pristatymo būdo su šiomis pristatymo klasėmis"
 
-#: includes/class-mp-admin.php:6489
-msgid "disable virtual products shipping"
-msgstr "Išjungti virtualių produktų pristatymą"
-
 #: includes/class-mp-admin.php:531
 #: includes/abstracts/abstract-wc-mp-shipping-method.php:141
 #: includes/abstracts/abstract-wc-mp-shipping-method.php:284
@@ -550,10 +538,6 @@ msgstr "Įjungti"
 #: includes/class-mp-admin.php:291
 msgid "Enable log"
 msgstr "Įjungti išrašus"
-
-#: includes/class-mp-admin.php:6505
-msgid "enable virtual products shipping"
-msgstr "Įjungti virtualių produktų pristatymą"
 
 #: includes/emails/class-multiparcels-automatic-confirmation-failed-email.php:91
 msgid "Enable/Disable"
@@ -750,14 +734,6 @@ msgstr "Logotipo plotis (atsiskaityme)"
 #: includes/class-mp-admin.php:1257
 msgid "Identification"
 msgstr "Identifikacija"
-
-#: includes/class-mp-admin.php:7933
-msgid ""
-"If the delimiter is a comma(,) - there would be three products when "
-"dispatching an order and not one"
-msgstr ""
-"Jei skyriklis yra kablelis (,), išsiunčiant užsakymą bus trys produktai, o "
-"ne vienas"
 
 #: includes/shipping/class-wc-mp-shipping-helper.php:840
 msgid "In transit"
@@ -1670,14 +1646,6 @@ msgstr "Jūs naudojate savo lokaciją"
 #: includes/class-mp-admin.php:2296
 msgid "You can unsubscribe any time!"
 msgstr "Jūs galite atsisakyti bet kada!"
-
-#: includes/class-mp-admin.php:7917
-msgid ""
-"You can use this feature to split product codes in to different products "
-"when dispatching"
-msgstr ""
-"Šią funkciją galite naudoti produktų kodams padalinti į skirtingus produktus "
-"išsiuntimo metu"
 
 #: includes/class-mp-woocommerce-order-shipping.php:2073
 msgid "You have reached your plan limit"
