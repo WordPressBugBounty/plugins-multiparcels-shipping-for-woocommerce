@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Plugins - MultiParcels Shipping For WooCommerce - Stable (latest release) package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-04-22 04:07+0000\n"
+"PO-Revision-Date: 2026-05-14 08:54+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -328,6 +328,10 @@ msgstr "Kuponų nuolaidos"
 #: includes/abstracts/abstract-wc-mp-courier-shipping-method.php:40
 msgid "Courier"
 msgstr "Kurjeris"
+
+#: includes/class-multiparcels-service.php
+msgid "Courier with label"
+msgstr ""
 
 #: includes/class-mp-amazing-shipping.php:144 includes/class-mp-admin.php:917
 msgid "Create"
@@ -1272,6 +1276,15 @@ msgstr ""
 msgid "Searching..."
 msgstr "Ieškoma..."
 
+#: includes/abstracts/abstract-wc-mp-shipping-method.php
+msgid "Select LP Express parcel locker that will be used for storage service."
+msgstr ""
+"Pasirinkite LP Express paštomatą, kuris bus naudojamas saugojimo paslaugai."
+
+#: includes/abstracts/abstract-wc-mp-shipping-method.php
+msgid "Select parcel locker"
+msgstr "Pasirinkite paštomatą"
+
 #: includes/class-mp-admin.php:348
 msgid "Selected carrier and pickup location on invoice"
 msgstr "Sąskaitoje faktūroje pasirinktas vežėjas ir atsiėmimo vieta"
@@ -1425,6 +1438,14 @@ msgstr "Būsena"
 #: includes/class-mp-admin.php:663
 msgid "Statuses that will be confirmed"
 msgstr "Būsenos kurios bus patvirtintos"
+
+#: includes/class-multiparcels-service.php
+msgid "Storage in parcel locker"
+msgstr "Saugojimas paštomate"
+
+#: includes/abstracts/abstract-wc-mp-shipping-method.php:383
+msgid "Storage parcel locker"
+msgstr "Saugojimas paštomate"
 
 #: includes/class-mp-admin.php:429
 #: includes/class-mp-woocommerce-order-shipping.php:2118

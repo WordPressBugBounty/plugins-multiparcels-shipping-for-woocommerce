@@ -29,6 +29,7 @@ function transliterate(word) {
 
 }
 
+//OLD
 function initCheckoutWatcher() {
 
     // console.log("Window multi" + window.multiparcels_selected_location);
@@ -69,6 +70,7 @@ function initializeCheckoutBlocks() {
 function attachShippingRateListeners() {
     const $ = jQuery;
 
+    // OLD
     let selectedValue = $(".wc-block-components-shipping-rates-control__package input[type=radio]:checked").val();
 
     $('.wc-block-components-shipping-rates-control__package')
@@ -104,13 +106,21 @@ function handleShippingMethodChange(selectedValue) {
         }
     });
 
-    //Pickup point logic
-    if (isPickupPoint(selectedValue)) {
-        setupPickupPointSelect(selectedValue);
-    } else if (selectedValue.indexOf("siuntos_autobusais") > 0) {
-        setupSiuntosAutobusaisSelect(selectedValue);
+    if (multiparcelsIsStorageShippingMethod(selectedValue)) {
+        multiparcelsHidePickupPointSelects();
+        return;
+    }
+
+    if (selectedValue) {
+        if (isPickupPoint(selectedValue)) {
+            setupPickupPointSelect(selectedValue);
+        } else if (selectedValue.indexOf("siuntos_autobusais") > 0) {
+            setupSiuntosAutobusaisSelect(selectedValue);
+        } else {
+            multiparcelsHidePickupPointSelects();
+        }
     } else {
-        $('#mp-wc-pickup-point-shipping-block').hide();
+        multiparcelsHidePickupPointSelects();
     }
 }
 
@@ -120,6 +130,38 @@ function isPickupPoint(value) {
         value.includes('pickup_point') ||
         value.includes('post_lv_post')
     );
+}
+
+function multiparcelsIsStorageShippingMethod(selectedValue) {
+    if (!selectedValue) {
+        return false;
+    }
+
+    if (
+        typeof multiparcels !== 'undefined' &&
+        Array.isArray(multiparcels.storage_shipping_method_rate_ids) &&
+        multiparcels.storage_shipping_method_rate_ids.indexOf(selectedValue) !== -1
+    ) {
+        return true;
+    }
+
+    var isStorage = false;
+
+    jQuery.ajax({
+        url: multiparcels.ajax_url,
+        type: 'POST',
+        async: false,
+        data: {
+            action: 'multiparcels_is_storage_shipping_method',
+            selected_value: selectedValue,
+            nonce: multiparcels.nonce
+        },
+        success: function (response) {
+            isStorage = parseInt(response, 10) === 1;
+        }
+    });
+
+    return isStorage;
 }
 
 function setupPickupPointSelect(selectedValue) {
@@ -302,6 +344,35 @@ function sendPickupAjax(pickupId) {
         nonce: multiparcels.nonce,
         multiparcels_pickup_location_value: pickupId
     });
+}
+
+
+function multiparcelsHidePickupPointSelects() {
+    jQuery('#mp-wc-pickup-point-shipping-block').hide();
+    jQuery('#mp-wc-pickup-point-shipping-select-block').hide();
+
+    jQuery('#mp-wc-pickup-point-shipping').hide();
+    jQuery('#mp-wc-pickup-point-shipping-select').val('').trigger('change');
+
+    jQuery('#mp-selected-pickup-point-info-wrapper').hide();
+    jQuery('#mp-map-preview').hide();
+    jQuery('.mp-selected-pickup-point-info').html('');
+
+    jQuery('.multiparcels-pickup-point-wrapper').hide();
+    jQuery('.multiparcels-terminal-wrapper').hide();
+    jQuery('.multiparcels-pickup-point-select').hide();
+    jQuery('.multiparcels-terminal-select').hide();
+
+    jQuery('select[name="multiparcels_location_identifier"]').val('').trigger('change');
+    jQuery('input[name="multiparcels_location_identifier"]').val('');
+
+    localStorage.removeItem('mp_selected_pickup_point');
+    localStorage.removeItem('mp_selected_pickup_point_text');
+    localStorage.removeItem('mp_selected_pickup_point_block');
+    localStorage.removeItem('mp_selected_pickup_point_text_block');
+
+    window.multiparcels_selected_location = '';
+    window.multiparcels_selected_location_text = '';
 }
 
 let mp_ignore_checkout_update = false;
@@ -518,7 +589,9 @@ jQuery(document).ready(function() {
     $(document).on('input change', '#shipping-postcode', function() {
         window.multiparcels_selected_location = $('#mp-wc-pickup-point-shipping-select-block').val();
         window.multiparcels_selected_location_text = $('#mp-wc-pickup-point-shipping-select-block option:selected').text();
-        initCheckoutWatcher();
+        setTimeout(() => {
+            initCheckoutWatcher();
+        }, 1500);
     });
 
     if(!document.querySelector('.wc-block-checkout')) {
@@ -689,7 +762,10 @@ function initializeClassicPickupPointsSelect() {
 
             (shipping_method.substr(0, 12) === 'multiparcels' && shipping_method.indexOf("multiparcels_post_lv_post") !== -1 && shipping_method.split(':')[0].endsWith('_post'))) {
 
-
+            if (multiparcelsIsStorageShippingMethod(shipping_method)) {
+                multiparcelsHidePickupPointSelects();
+                return;
+            }
 
             // Reset selected
 
