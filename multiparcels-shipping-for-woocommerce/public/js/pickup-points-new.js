@@ -106,10 +106,13 @@ function handleShippingMethodChange(selectedValue) {
         }
     });
 
-    if (multiparcelsIsStorageShippingMethod(selectedValue)) {
-        multiparcelsHidePickupPointSelects();
-        return;
+    if (selectedValue.indexOf('lp_express') > 0) {
+        if (multiparcelsIsStorageShippingMethod(selectedValue)) {
+            multiparcelsHidePickupPointSelects();
+            return;
+        }
     }
+
 
     if (selectedValue) {
         if (isPickupPoint(selectedValue)) {
@@ -762,9 +765,11 @@ function initializeClassicPickupPointsSelect() {
 
             (shipping_method.substr(0, 12) === 'multiparcels' && shipping_method.indexOf("multiparcels_post_lv_post") !== -1 && shipping_method.split(':')[0].endsWith('_post'))) {
 
-            if (multiparcelsIsStorageShippingMethod(shipping_method)) {
-                multiparcelsHidePickupPointSelects();
-                return;
+            if (shipping_method.indexOf('lp_express') > 0) {
+                if (multiparcelsIsStorageShippingMethod(shipping_method)) {
+                    multiparcelsHidePickupPointSelects();
+                    return;
+                }
             }
 
             // Reset selected
