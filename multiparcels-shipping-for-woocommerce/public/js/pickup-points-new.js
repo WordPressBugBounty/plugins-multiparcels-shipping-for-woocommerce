@@ -88,7 +88,7 @@ function attachShippingRateListeners() {
 
 function handleShippingMethodChange(selectedValue) {
     const $ = jQuery;
-
+	if (!selectedValue) {        multiparcelsHidePickupPointSelects();        return;    }	
     // AJAX — hide address fields
     $.post(multiparcels.ajax_url, {
         action: 'checkout_blocks_hide_inputs_for_terminal',
@@ -96,11 +96,7 @@ function handleShippingMethodChange(selectedValue) {
         nonce: multiparcels.nonce
     }).done(response => {
         if (response == 1) {
-            $('#shipping .wc-block-components-address-form__address_1, \
-              #shipping .wc-block-components-address-form__address_2, \
-              #shipping .wc-block-components-address-form__city, \
-              #shipping .wc-block-components-address-form__state, \
-              #shipping .wc-block-components-address-form__postcode').remove();
+            $(				'#shipping .wc-block-components-address-form__address_1,' +				'#shipping .wc-block-components-address-form__address_2,' +				'#shipping .wc-block-components-address-form__city,' +				'#shipping .wc-block-components-address-form__state,' +				'#shipping .wc-block-components-address-form__postcode'			).remove();
         } else {
             $('.wc-block-components-address-form [class*="address-form__"]').show();
         }
@@ -197,7 +193,7 @@ function setupPickupPointSelect(selectedValue) {
                     nonce: multiparcels.nonce,
                     selected_value: selectedValue,
                     q: params.term || '',
-                    page: params.page || 1
+                    page: params.page || 1,
                 };
             },
             processResults: function (data, params) {
