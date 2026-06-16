@@ -14,7 +14,7 @@ Tested up to: 7.0
 
 Requires PHP: 7.4
 
-Stable tag: 1.30.26
+Stable tag: 1.30.27
 
 
 
@@ -277,6 +277,9 @@ Yes! Tracking code is automatically added to the "Completed" order email
 6. Email preview
 
 == Changelog ==
+
+= 1.30.27 – 2026-06-16
+Added WooCommerce webhook support for cancelled, refunded orders, including refund details and remaining item counts. On-hold orders are skipped to avoid premature synchronization.
 
 = 1.30.26 – 2026-06-15
 Add non-blocking WooCommerce order webhooks for NOPARCELS sync
